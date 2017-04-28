@@ -1,0 +1,439 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OfficeConverter</name>
+    </assembly>
+    <members>
+        <member name="T:OfficeConverter.IConverter">
+            <summary>
+            Interface to make Reader class COM exposable
+            </summary>
+        </member>
+        <member name="M:OfficeConverter.IConverter.ConvertFromCom(System.String,System.String)">
+            <summary>
+            Converts the <paramref name="inputFile"/> to PDF and saves it as the <paramref name="outputFile"/>
+            </summary>
+            <param name="inputFile">The Microsoft Office file</param>
+            <param name="outputFile">The output file with full path</param>
+            <returns>Returns true when the conversion is succesfull, false is retournerd when an exception occurred. 
+            The exception can be retrieved with the <see cref="M:OfficeConverter.IConverter.GetErrorMessage"/> method</returns>
+        </member>
+        <member name="M:OfficeConverter.IConverter.GetErrorMessage">
+            <summary>
+            Get the last know error message. When the string is empty there are no errors
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:OfficeConverter.Converter">
+            <summary>
+            With this class an Microsoft Office document can be converted to PDF format. Microsoft Office 2007 
+            (with PDF export plugin) or higher is needed.
+            </summary>
+        </member>
+        <member name="F:OfficeConverter.Converter._errorMessage">
+            <summary>
+            Contains an error message when something goes wrong in the <see cref="M:OfficeConverter.Converter.ConvertFromCom(System.String,System.String)"/> method.
+            This message can be retreived with the GetErrorMessage. This way we keep .NET exceptions inside
+            when this code is called from a COM language
+            </summary>
+        </member>
+        <member name="M:OfficeConverter.Converter.CheckFileNameAndOutputFolder(System.String,System.String)">
+            <summary>
+            Checks if the <paramref name="inputFile"/> and the folder where the <paramref name="outputFile"/> is written exists
+            </summary>
+            <param name="inputFile"></param>
+            <param name="outputFile"></param>
+            <exception cref="T:System.ArgumentNullException">Raised when the <paramref name="inputFile"/> or <paramref name="outputFile"/> is null or empty</exception>
+            <exception cref="T:System.IO.FileNotFoundException">Raised when the <paramref name="inputFile"/> does not exists</exception>
+            <exception cref="T:System.IO.DirectoryNotFoundException">Raised when the folder where the <paramref name="outputFile"/> is written does not exists</exception>
+        </member>
+        <member name="M:OfficeConverter.Converter.ConvertFromCom(System.String,System.String)">
+            <summary>
+            Converts the <paramref name="inputFile"/> to PDF and saves it as the <paramref name="outputFile"/>
+            </summary>
+            <param name="inputFile">The Microsoft Office file</param>
+            <param name="outputFile">The output file with full path</param>
+            <returns>Returns true when the conversion is succesfull, false is retournerd when an exception occurred. 
+            The exception can be retrieved with the <see cref="M:OfficeConverter.Converter.GetErrorMessage"/> method</returns>
+        </member>
+        <member name="M:OfficeConverter.Converter.Convert(System.String,System.String)">
+            <summary>
+            Converts the <paramref name="inputFile"/> to PDF and saves it as the <paramref name="outputFile"/>
+            </summary>
+            <param name="inputFile">The Microsoft Office file</param>
+            <param name="outputFile">The output file with full path</param>
+            <exception cref="T:System.ArgumentNullException">Raised when the <paramref name="inputFile"/> or <paramref name="outputFile"/> is null or empty</exception>
+            <exception cref="T:System.IO.FileNotFoundException">Raised when the <paramref name="inputFile"/> does not exist</exception>
+            <exception cref="T:System.IO.DirectoryNotFoundException">Raised when the folder where the <paramref name="outputFile"/> is written does not exists</exception>
+            <exception cref="T:OfficeConverter.Exceptions.OCFileIsCorrupt">Raised when the <paramref name="inputFile" /> is corrupt</exception>
+            <exception cref="T:OfficeConverter.Exceptions.OCFileTypeNotSupported">Raised when the <paramref name="inputFile"/> is not supported</exception>
+            <exception cref="T:OfficeConverter.Exceptions.OCFileIsPasswordProtected">Raised when the <paramref name="inputFile"/> is password protected</exception>
+            <exception cref="T:OfficeConverter.Exceptions.OCCsvFileLimitExceeded">Raised when a CSV <paramref name="inputFile"/> has to many rows</exception>
+            <exception cref="T:OfficeConverter.Exceptions.OCFileContainsNoData">Raised when the Microsoft Office file contains no actual data</exception>
+        </member>
+        <member name="M:OfficeConverter.Converter.GetErrorMessage">
+            <summary>
+            Get the last know error message. When the string is empty there are no errors
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:OfficeConverter.Converter.OpenDocumentFormatIsPasswordProtected(System.String)">
+            <summary>
+            Returns true when the <paramref name="inputFile"/> is password protected
+            </summary>
+            <param name="inputFile">The OpenDocument format file</param>
+        </member>
+        <member name="T:OfficeConverter.Excel">
+            <summary>
+            This class is used as a placeholder for al Excel related methods
+            </summary>
+        </member>
+        <member name="T:OfficeConverter.Excel.ShapePosition">
+            <summary>
+            Placeholder for shape information
+            </summary>
+        </member>
+        <member name="T:OfficeConverter.Excel.ExcelPaperSize">
+            <summary>
+            Placeholder for papersize and orientation information
+            </summary>
+        </member>
+        <member name="T:OfficeConverter.Excel.MergedCellSearchOrder">
+            <summary>
+            Direction to search in merged cell
+            </summary>
+        </member>
+        <member name="F:OfficeConverter.Excel.MergedCellSearchOrder.FirstRow">
+            <summary>
+            Search for first row in the merge area
+            </summary>
+        </member>
+        <member name="F:OfficeConverter.Excel.MergedCellSearchOrder.FirstColumn">
+            <summary>
+            Search for first column in the merge area
+            </summary>
+        </member>
+        <member name="F:OfficeConverter.Excel.MergedCellSearchOrder.LastRow">
+            <summary>
+            Search for last row in the merge area
+            </summary>
+        </member>
+        <member name="F:OfficeConverter.Excel.MergedCellSearchOrder.LastColumn">
+            <summary>
+            Search for last column in the merge area
+            </summary>
+        </member>
+        <member name="F:OfficeConverter.Excel.VersionNumber">
+            <summary>
+            Excel version number
+            </summary>
+        </member>
+        <member name="F:OfficeConverter.Excel.MaxRows">
+            <summary>
+            Excel maximum rows
+            </summary>
+        </member>
+        <member name="F:OfficeConverter.Excel.PaperSizes">
+            <summary>
+            Paper sizes to use when detecting optimal page size with the <see cref="M:OfficeConverter.Excel.SetWorkSheetPaperSize(Microsoft.Office.Interop.Excel._Worksheet,System.String)"/> method
+            </summary>
+        </member>
+        <member name="F:OfficeConverter.Excel.ZoomRatios">
+            <summary>
+            Zoom ration to use when detecting optimal page size with the <see cref="M:OfficeConverter.Excel.SetWorkSheetPaperSize(Microsoft.Office.Interop.Excel._Worksheet,System.String)"/> method
+            </summary>
+        </member>
+        <member name="M:OfficeConverter.Excel.#cctor">
+            <summary>
+            This constructor is called the first time when the <see cref="M:OfficeConverter.Excel.Convert(System.String,System.String)"/> or
+            <see cref="M:OfficeConverter.Excel.IsPasswordProtected(System.String)"/> method is called. Some checks are done to
+            see if all requirements for a succesfull conversion are there.
+            </summary>
+            <exception cref="T:OfficeConverter.Exceptions.OCConfiguration">Raised when the registry could not be read to determine Excel version</exception>
+        </member>
+        <member name="M:OfficeConverter.Excel.CheckIfSystemProfileDesktopDirectoryExists">
+            <summary>
+            If you want to run this code on a server then the following folders must exist, if they don't
+            then you can't use Excel to convert files to PDF
+            </summary>
+            <exception cref="T:OfficeConverter.Exceptions.OCConfiguration">Raised when the needed directory could not be created</exception>
+        </member>
+        <member name="M:OfficeConverter.Excel.CheckIfPrinterIsInstalled">
+            <summary>
+            Excel needs a default printer to export to PDF, this method will check if there is one
+            </summary>
+            <exception cref="T:OfficeConverter.Exceptions.OCConfiguration">Raised when an default printer does not exists</exception>
+        </member>
+        <member name="M:OfficeConverter.Excel.GetColumnAddress(System.Int32)">
+            <summary>
+            Returns the column address for the given <paramref name="column"/>
+            </summary>
+            <param name="column"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OfficeConverter.Excel.GetColumnNumber(System.String)">
+            <summary>
+            Returns the column number for the given <paramref name="columnAddress"/>
+            </summary>
+            <param name="columnAddress"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OfficeConverter.Excel.CheckForMergedCell(Microsoft.Office.Interop.Excel.Range,OfficeConverter.Excel.MergedCellSearchOrder)">
+            <summary>
+            Checks if the given cell is merged and if so returns the last column or row from this merge.
+            When the cell is not merged it just returns the cell
+            </summary>
+            <param name="range">The cell</param>
+            <param name="searchOrder"><see cref="T:OfficeConverter.Excel.MergedCellSearchOrder"/></param>
+            <returns></returns>
+        </member>
+        <member name="M:OfficeConverter.Excel.GetWorksheetPrintArea(Microsoft.Office.Interop.Excel._Worksheet)">
+            <summary>
+            Figures out the used cell range. This are the cell's that contain any form of text and 
+            returns this range. An empty range will be returned when there are shapes used on a worksheet
+            </summary>
+            <param name="worksheet"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OfficeConverter.Excel.CountVerticalPageBreaks(Microsoft.Office.Interop.Excel.VPageBreaks)">
+            <summary>
+            Returns the total number of vertical pagebreaks in the print area
+            </summary>
+            <param name="pageBreaks"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OfficeConverter.Excel.SetWorkSheetPaperSize(Microsoft.Office.Interop.Excel._Worksheet,System.String)">
+            <summary>
+            This method wil figure out the optimal paper size to use and sets it
+            </summary>
+            <param name="worksheet"></param>
+            <param name="printArea"></param>
+        </member>
+        <member name="M:OfficeConverter.Excel.SetChartPaperSize(Microsoft.Office.Interop.Excel._Chart)">
+            <summary>
+            This method wil set the papersize for a chart
+            </summary>
+            <param name="chart"></param>
+        </member>
+        <member name="M:OfficeConverter.Excel.Convert(System.String,System.String)">
+            <summary>
+            Converts an Excel sheet to PDF
+            </summary>
+            <param name="inputFile">The Excel input file</param>
+            <param name="outputFile">The PDF output file</param>
+            <returns></returns>
+            <exception cref="T:OfficeConverter.Exceptions.OCCsvFileLimitExceeded">Raised when a CSV <paramref name="inputFile"/> has to many rows</exception>
+        </member>
+        <member name="M:OfficeConverter.Excel.IsPasswordProtected(System.String)">
+            <summary>
+            Returns true when the Excel file is password protected
+            </summary>
+            <param name="fileName"></param>
+            <returns></returns>
+            <exception cref="T:OfficeConverter.Exceptions.OCFileIsCorrupt">Raised when the file is corrupt</exception>
+        </member>
+        <member name="M:OfficeConverter.Excel.GetCsvSeperator(System.String,System.String@,Microsoft.Office.Interop.Excel.XlTextQualifier@)">
+            <summary>
+            Returns the seperator and textqualifier that is used in the CSV file
+            </summary>
+            <param name="inputFile">The inputfile</param>
+            <param name="separator">The separator that is used</param>
+            <param name="textQualifier">The text qualifier</param>
+            <returns></returns>
+        </member>
+        <member name="M:OfficeConverter.Excel.Open(Microsoft.Office.Interop.Excel._Application,System.String,System.String,System.Boolean)">
+            <summary>
+            Opens the <paramref name="inputFile"/> and returns it as an <see cref="T:Microsoft.Office.Interop.Excel.Workbook"/> object
+            </summary>
+            <param name="excel">The <see cref="T:Microsoft.Office.Interop.Excel.Application"/></param>
+            <param name="inputFile">The file to open</param>
+            <param name="extension">The file extension</param>
+            <param name="repairMode">When true the <paramref name="inputFile"/> is opened in repair mode</param>
+            <returns></returns>
+            <exception cref="T:OfficeConverter.Exceptions.OCCsvFileLimitExceeded">Raised when a CSV <paramref name="inputFile"/> has to many rows</exception>
+        </member>
+        <member name="M:OfficeConverter.Excel.DeleteAutoRecoveryFiles">
+            <summary>
+            This method will delete the automatic created Resiliency key. Excel uses this registry key  
+            to make entries to corrupted workbooks. If there are to many entries under this key Excel will
+            get slower and slower to start. To prevent this we just delete this key when it exists
+            </summary>
+        </member>
+        <member name="T:OfficeConverter.Exceptions.OCCsvFileLimitExceeded">
+            <summary>
+                Raised when a CSV file has to many rows
+            </summary>
+        </member>
+        <member name="T:OfficeConverter.Exceptions.OCConfiguration">
+            <summary>
+                Raised when there is an Office configuration problem
+            </summary>
+        </member>
+        <member name="T:OfficeConverter.Exceptions.OCFileIsCorrupt">
+            <summary>
+                Raised when the Microsoft Office file is corrupt
+            </summary>
+        </member>
+        <member name="T:OfficeConverter.Exceptions.OCFileContainsNoData">
+            <summary>
+                Raised when the Microsoft Office file contains no actual data
+            </summary>
+        </member>
+        <member name="T:OfficeConverter.Exceptions.OCFileIsPasswordProtected">
+            <summary>
+                Raised when the Microsoft Office file is password protected
+            </summary>
+        </member>
+        <member name="T:OfficeConverter.Exceptions.OCFileTypeNotSupported">
+            <summary>
+                Raised when the Microsoft Office file type is not supported
+            </summary>
+        </member>
+        <member name="M:OfficeConverter.Helpers.ExceptionHelpers.GetInnerException(System.Exception)">
+            <summary>
+            Get the complete inner exception tree
+            </summary>
+            <param name="e">The exception object</param>
+            <returns></returns>
+        </member>
+        <member name="T:OfficeConverter.Helpers.FileManager">
+            <summary>
+            This class contains file management methods that are not available in the .NET framework
+            </summary>
+        </member>
+        <member name="M:OfficeConverter.Helpers.FileManager.CheckForBackSlash(System.String)">
+            <summary>
+            Check if there is a backslash at the end of the string and if not add it
+            </summary>
+            <param name="line"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OfficeConverter.Helpers.FileManager.FileExistsMakeNew(System.String)">
+            <summary>
+            Checks if a file already exists and if so adds a number until the file is unique
+            </summary>
+            <param name="fileName">The file to check</param>
+            <returns></returns>
+        </member>
+        <member name="M:OfficeConverter.Helpers.FileManager.RemoveInvalidFileNameChars(System.String)">
+            <summary>
+            Removes illegal filename characters
+            </summary>
+            <param name="fileName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OfficeConverter.Helpers.FileManager.GetFileSizeString(System.Double)">
+            <summary>
+            Gives the size of a file in Windows format (GB, MB, KB, Bytes)
+            </summary>
+            <param name="bytes">Filesize in bytes</param>
+            <returns></returns>
+        </member>
+        <member name="M:OfficeConverter.Helpers.NativeMethods.IsWindowsServer">
+            <summary>
+            Returns true when running on a server system
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:OfficeConverter.PowerPoint">
+            <summary>
+            This class is used as a placeholder for al PowerPoint related methods
+            </summary>
+        </member>
+        <member name="F:OfficeConverter.PowerPoint.VersionNumber">
+            <summary>
+            Excel version number
+            </summary>
+        </member>
+        <member name="M:OfficeConverter.PowerPoint.#cctor">
+            <summary>
+            This constructor is called the first time when the <see cref="M:OfficeConverter.PowerPoint.Convert(System.String,System.String)"/> or
+            <see cref="!:FileIsPasswordProtected"/> method is called. Some checks are done to
+            see if all requirements for a succesfull conversion are there.
+            </summary>
+            <exception cref="T:OfficeConverter.Exceptions.OCConfiguration">Raised when the registry could not be read to determine PowerPoint version</exception>
+        </member>
+        <member name="M:OfficeConverter.PowerPoint.Convert(System.String,System.String)">
+            <summary>
+            Converts a PowerPoint document to PDF
+            </summary>
+            <param name="inputFile">The PowerPoint input file</param>
+            <param name="outputFile">The PDF output file</param>
+            <returns></returns>
+        </member>
+        <member name="M:OfficeConverter.PowerPoint.IsPasswordProtected(System.String)">
+            <summary>
+            Returns true when the binary PowerPoint file is password protected
+            </summary>
+            <param name="fileName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:OfficeConverter.PowerPoint.Open(Microsoft.Office.Interop.PowerPoint._Application,System.String,System.Boolean)">
+            <summary>
+            Opens the <paramref name="inputFile"/> and returns it as an <see cref="T:Microsoft.Office.Interop.PowerPoint.Presentation"/> object
+            </summary>
+            <param name="powerPoint">The <see cref="T:Microsoft.Office.Interop.PowerPoint.Application"/></param>
+            <param name="inputFile">The file to open</param>
+            <param name="repairMode">When true the <paramref name="inputFile"/> is opened in repair mode</param>
+            <returns></returns>
+            <exception cref="T:OfficeConverter.Exceptions.OCFileIsCorrupt">Raised when the <paramref name="inputFile"/> is corrupt and can't be opened in repair mode</exception>
+        </member>
+        <member name="M:OfficeConverter.PowerPoint.DeleteAutoRecoveryFiles">
+            <summary>
+            This method will delete the automatic created Resiliency key. PowerPoint uses this registry key  
+            to make entries to corrupted presentations. If there are to many entries under this key PowerPoint will
+            get slower and slower to start. To prevent this we just delete this key when it exists
+            </summary>
+        </member>
+        <member name="T:OfficeConverter.Word">
+            <summary>
+            This class is used as a placeholder for al Word related methods
+            </summary>
+        </member>
+        <member name="F:OfficeConverter.Word.VersionNumber">
+            <summary>
+            Word version number
+            </summary>
+        </member>
+        <member name="M:OfficeConverter.Word.#cctor">
+            <summary>
+            This constructor is called the first time when the <see cref="M:OfficeConverter.Word.Convert(System.String,System.String)"/> or
+            <see cref="M:OfficeConverter.Word.IsPasswordProtected(System.String)"/> method is called. Some checks are done to
+            see if all requirements for a succesfull conversion are there.
+            </summary>
+            <exception cref="T:OfficeConverter.Exceptions.OCConfiguration">Raised when the registry could not be read to determine Word version</exception>
+        </member>
+        <member name="M:OfficeConverter.Word.Convert(System.String,System.String)">
+            <summary>
+            Converts a Word document to PDF
+            </summary>
+            <param name="inputFile">The Word input file</param>
+            <param name="outputFile">The PDF output file</param>
+            <returns></returns>
+        </member>
+        <member name="M:OfficeConverter.Word.IsPasswordProtected(System.String)">
+            <summary>
+            Returns true when the Word file is password protected
+            </summary>
+            <param name="fileName"></param>
+            <returns></returns>
+            <exception cref="T:OfficeConverter.Exceptions.OCFileIsCorrupt">Raised when the file is corrupt</exception>
+        </member>
+        <member name="M:OfficeConverter.Word.Open(Microsoft.Office.Interop.Word._Application,System.String,System.Boolean)">
+            <summary>
+            Opens the <paramref name="inputFile"/> and returns it as an <see cref="T:Microsoft.Office.Interop.Word.Document"/> object
+            </summary>
+            <param name="word">The <see cref="T:Microsoft.Office.Interop.Word.Application"/></param>
+            <param name="inputFile">The file to open</param>
+            <param name="repairMode">When true the <paramref name="inputFile"/> is opened in repair mode</param>
+            <returns></returns>
+        </member>
+        <member name="M:OfficeConverter.Word.DeleteAutoRecoveryFiles">
+            <summary>
+            This method will delete the automatic created Resiliency key. Word uses this registry key  
+            to make entries to corrupted documents. If there are to many entries under this key Word will
+            get slower and slower to start. To prevent this we just delete this key when it exists
+            </summary>
+        </member>
+    </members>
+</doc>
